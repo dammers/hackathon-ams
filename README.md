@@ -18,7 +18,7 @@ Two Services:
 Once the container runs, you can access it via `http://localhost:8080`
 
 You can also run the webservice manually:
-* `shotgun --host 0.0.0.0 --port 8080 server.rb`
+* `shotgun --host 0.0.0.0 --port 8080 webservice.rb`
 
 However, you will need to have the following gems installed:
 * `gem install shotgun`
