@@ -1,0 +1,13 @@
+FROM training/sinatra
+MAINTAINER Clemens Siebler <clemens.siebler@gmail.com>
+
+
+RUN gem install shotgun
+RUN gem install aws-sdk
+RUN gem install json 
+
+RUN mkdir /sinatra
+COPY server.rb /sinatra
+
+EXPOSE 8080
+ENTRYPOINT shotgun --host 0.0.0.0 --port 8080 /sinatra/server.rb
