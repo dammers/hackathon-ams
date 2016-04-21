@@ -18,13 +18,17 @@ end
 clients[0].create_bucket(bucket: 'camera0')
 
 get "/" do
-  
+  content_type :json
+  { :message => "Webservice is running"}.to_json
 end
 
-get "/take_picture/:id" do
+get "/take_photo/:id" do
+  content_type :json
   id = params[:id].to_i
-  write_webcam_image_to_s3(clients[id], "camera#{id}")
-  "Took picture for camera#{id}"
+  image_url = write_webcam_image_to_s3(clients[id], "camera#{id}")
+  "Took photo for camera#{id}"
+  { :message => "Took photo for camera#{id}",
+    :image_url => image_url}.to_json
 end
 
 def write_webcam_image_to_s3(client, bucket)
@@ -45,4 +49,5 @@ def write_webcam_image_to_s3(client, bucket)
     server_side_encryption: 'AES256'
   )
   image_file.close
+  url + "/" + bucket + "/" + image_name
 end
