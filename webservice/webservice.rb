@@ -2,7 +2,7 @@ require 'sinatra'
 require 'json'
 require 'aws-sdk'
 
-url = 'https://10.65.57.176:8082'
+$endpoint = 'https://10.65.57.176:8082'
 
 creds = [Aws::Credentials.new('YSBDCQOZGH5NUG355HQY', 'DI/7+RyiQXtGM5yQhEoaouMX+phAZmXktvK6ctuN'),
          Aws::Credentials.new('YSBDCQOZGH5NUG355HQY', 'DI/7+RyiQXtGM5yQhEoaouMX+phAZmXktvK6ctuN'),
@@ -12,7 +12,7 @@ creds = [Aws::Credentials.new('YSBDCQOZGH5NUG355HQY', 'DI/7+RyiQXtGM5yQhEoaouMX+
 
 clients = []
 creds.each do |cred|
-    clients << Aws::S3::Client.new(region: 'us-east-1', endpoint: url, credentials: cred, force_path_style: true, ssl_verify_peer: false)
+    clients << Aws::S3::Client.new(region: 'us-east-1', endpoint: $endpoint, credentials: cred, force_path_style: true, ssl_verify_peer: false)
 end
 
 clients[0].create_bucket(bucket: 'camera0')
@@ -49,5 +49,6 @@ def write_webcam_image_to_s3(client, bucket)
     server_side_encryption: 'AES256'
   )
   image_file.close
-  url + "/" + bucket + "/" + image_name
+  File.delete(image_file)
+  $endpoint + "/" + bucket + "/" + image_name
 end
