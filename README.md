@@ -13,7 +13,7 @@ Two Services:
 * `docker build .` builds the container
 * `docker run -p 8080:8080 <image_id>` runs the container
 * `docker ps` lists all running containers
-* `docker kill <id>` kills an running container
+* `docker stop <id>` stops an running container
 
 Once the container runs, you can access it via `http://localhost:8080`
 
@@ -22,6 +22,24 @@ You can also run the webservice manually:
 
 However, you will need to have the following gems installed:
 * `gem install shotgun`
+* `gem install sinatra`
 * `gem install aws-sdk`
 
 ### webclient
+
+* `docker build .` builds the container
+* `docker run -p 8081:8081 <image_id>` runs the container
+* `docker ps` lists all running containers
+* `docker stop <id>` stops an running container
+
+Once the container runs, you can access it via `http://localhost:8081`
+
+You can also run the webservice manually:
+* `shotgun --host 0.0.0.0 --port 8081 webclient.rb`
+
+However, you will need to have the following gems installed:
+* `gem install shotgun`
+* `gem install sinatra`
+* `gem install unirest`
+* `gem install haml`
+
