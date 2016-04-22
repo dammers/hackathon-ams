@@ -1,6 +1,7 @@
-FROM training/sinatra
+FROM ruby:alpine
 MAINTAINER Clemens Siebler <clemens.siebler@gmail.com>
 
+RUN gem install sinatra
 RUN gem install shotgun
 RUN gem install aws-sdk
 
