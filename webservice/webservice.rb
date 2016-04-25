@@ -13,7 +13,7 @@ get "/" do
   {:message => "Webservice is running"}.to_json
 end
 
-post "/take_photo/" do
+get "/take_photo" do
   content_type :json
   bucket = "camera0"
   image_url = write_webcam_image_to_s3(bucket)
@@ -21,7 +21,7 @@ post "/take_photo/" do
 end
 
 def write_webcam_image_to_s3(bucket)
-  image_name = "/tmp/" + SecureRandom.hex(32) + ".jpg";
+  image_name = SecureRandom.hex(32) + ".jpg";
   
   # Take picture and store it as image_name
   cli_cmd = "fswebcam -r 640x480 --jpeg 85 --delay 1 " + image_name
@@ -29,7 +29,7 @@ def write_webcam_image_to_s3(bucket)
 
   # Open Image file & upload it to StorageGRID
   image_file = File.open(image_name, "r+")
-  client.put_object(bucket: bucket, key: image_name,
+  $client.put_object(bucket: bucket, key: image_name,
     metadata: { 'foo' => 'bar' },
     body: image_file.read,
     server_side_encryption: 'AES256'
